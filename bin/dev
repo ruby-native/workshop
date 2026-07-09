@@ -5,6 +5,6 @@ if ! gem list -i foreman > /dev/null 2>&1; then
   gem install foreman
 fi
 
-export PORT="${PORT:-3006}"
+export PORT="${PORT:-3000}"
 
 exec foreman start -f Procfile.dev "$@"
