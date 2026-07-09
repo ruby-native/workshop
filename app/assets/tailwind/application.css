@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant native (&:where([data-native-app] *));
+
 /* Design tokens, ported from Penny Pincher's hand-written stylesheet. */
 @theme {
   --color-canvas: #f5f7f4;

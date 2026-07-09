@@ -1,6 +1,8 @@
 <% content_for :title, "Categories" %>
 
-<header class="mb-[18px] flex items-center gap-1.5">
+<%= native_navbar_tag("Categories") %>
+
+<header class="native:hidden mb-[18px] flex items-center gap-1.5">
   <%= link_to "‹ Settings", settings_path, class: "px-0.5 py-1 text-[15px] font-semibold text-muted" %>
   <h1 class="text-xl font-bold tracking-tight">Categories</h1>
 </header>

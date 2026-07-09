@@ -44,5 +44,6 @@
   </div>
 
   <%= form.submit(@expense.new_record? ? "Add expense" : "Save changes",
-        id: "expense-submit", class: "btn btn-primary btn-block") %>
+        id: "expense-submit", class: "btn btn-primary btn-block native:hidden",
+        data: native_haptic_data(:success)) %>
 <% end %>

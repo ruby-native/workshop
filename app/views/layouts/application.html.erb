@@ -17,12 +17,15 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "ruby_native", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <% if authenticated? %>
-      <header class="sticky top-0 z-20 border-b border-line bg-canvas/90 backdrop-blur-md backdrop-saturate-150">
+      <%= native_tabs_tag %>
+
+      <header class="native:hidden sticky top-0 z-20 border-b border-line bg-canvas/90 backdrop-blur-md backdrop-saturate-150">
         <div class="mx-auto flex h-14 w-[min(100%-2rem,560px)] items-center justify-between">
           <%= link_to root_path, class: "inline-flex items-center gap-2.5 font-bold text-ink", aria: { label: "Penny Pincher" } do %>
             <span class="grid h-7 w-7 place-items-center rounded-[9px] bg-brand text-lg font-extrabold text-white">¢</span>
@@ -37,7 +40,7 @@
       </header>
     <% end %>
 
-    <main class="mx-auto w-[min(100%-2rem,560px)] pt-[18px] pb-11">
+    <main class="native-inset mx-auto w-[min(100%-2rem,560px)] pt-[18px] pb-11">
       <%= render "shared/flash" %>
       <%= yield %>
     </main>

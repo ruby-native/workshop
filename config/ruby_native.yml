@@ -1,0 +1,25 @@
+app:
+  name: Penny Pincher
+  mode: advanced
+  entry_path: /
+
+appearance:
+  tint_color: "#16a34a"
+  background_color:
+    light: "#f5f7f4"
+    dark: "#0c0f0d"
+  theme: auto
+
+tabs:
+  - title: Home
+    path: /
+    icon: house.fill
+    eager: true
+    auto_route: [ /expenses ]
+  - title: History
+    path: /summary
+    icon: calendar
+  - title: Settings
+    path: /settings
+    icon: gearshape.fill
+    auto_route: [ /categories, /profile ]
