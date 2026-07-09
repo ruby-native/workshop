@@ -1,0 +1,19 @@
+<% content_for :title, "Edit category" %>
+
+<%= native_form_tag %>
+<%= native_navbar_tag("Edit category") do |navbar| %>
+  <% navbar.submit_button title: "Save", click: "#category-submit" %>
+<% end %>
+
+<header class="screen-head with-back native:hidden">
+  <%= link_to settings_path, class: "back-link" do %>‹ Settings<% end %>
+  <h1 class="screen-title">Edit category</h1>
+</header>
+
+<div class="card">
+  <%= render "form" %>
+</div>
+
+<%= button_to "Delete category", category_path(@category), method: :delete,
+      class: "btn btn-danger btn-block", form: { class: "danger-form" },
+      data: { turbo_confirm: "Delete #{@category.name}? Its expenses will be removed too." } %>

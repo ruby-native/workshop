@@ -1,0 +1,7 @@
+groceries_today:
+  household: home
+  category: groceries
+  user: one
+  amount: 45
+  note: Market
+  spent_on: <%= Date.current.iso8601 %>

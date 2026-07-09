@@ -1,0 +1,16 @@
+<% content_for :title, "Add expense" %>
+
+<%# Presented modally in the app (path ends in /new). %>
+<%= native_form_tag %>
+<%= native_navbar_tag("Add expense") do |navbar| %>
+  <% navbar.submit_button title: "Add", click: "#expense-submit" %>
+<% end %>
+
+<header class="screen-head with-back native:hidden">
+  <%= link_to root_path, class: "back-link" do %>‹ Cancel<% end %>
+  <h1 class="screen-title">Add expense</h1>
+</header>
+
+<div class="card">
+  <%= render "form" %>
+</div>

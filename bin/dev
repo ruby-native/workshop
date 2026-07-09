@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+# Default to port 3006. Override with `bin/dev -p 4000` or `PORT=4000 bin/dev`.
+ENV["PORT"] ||= "3006"
+exec "./bin/rails", "server", *ARGV

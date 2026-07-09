@@ -1,0 +1,13 @@
+# Scheduled jobs run by the Solid Queue supervisor.
+# Times use the app's configured zone (config.time_zone in config/application.rb).
+
+production:
+  # Remind anyone who hasn't logged spending yet today (only if they have a
+  # registered push device). See app/jobs/daily_reminder_job.rb.
+  daily_spending_reminder:
+    class: DailyReminderJob
+    schedule: every day at 5pm
+
+  clear_solid_queue_finished_jobs:
+    command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
+    schedule: every hour at minute 12

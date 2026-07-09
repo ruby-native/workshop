@@ -1,0 +1,50 @@
+<%= form_with model: @expense, class: "expense-form" do |form| %>
+  <% if @expense.errors.any? %>
+    <div class="form-errors">
+      <%= @expense.errors.full_messages.to_sentence.capitalize %>.
+    </div>
+  <% end %>
+
+  <div class="amount-field">
+    <span class="amount-currency">$</span>
+    <%= form.number_field :amount, value: @expense.amount, inputmode: "numeric", pattern: "[0-9]*",
+          min: 1, step: 1, placeholder: "0", autofocus: @expense.new_record?,
+          class: "amount-input", aria: { label: "Amount in dollars" } %>
+  </div>
+  <p class="amount-hint">Whole dollars. No cents.</p>
+
+  <% if @categories.any? %>
+    <fieldset class="picker">
+      <legend>Category</legend>
+      <div class="chips">
+        <% @categories.each do |category| %>
+          <label class="chip" style="--chip-color: <%= category.color %>">
+            <%= form.radio_button :category_id, category.id,
+                  checked: @expense.category_id == category.id, class: "chip-input" %>
+            <span class="chip-emoji"><%= category.emoji %></span>
+            <span class="chip-name"><%= category.name %></span>
+          </label>
+        <% end %>
+      </div>
+    </fieldset>
+  <% else %>
+    <p class="field-hint">
+      No categories yet. <%= link_to "Add one first", new_category_path %>.
+    </p>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :note, "Note (optional)" %>
+    <%= form.text_field :note, placeholder: "What was it for?", maxlength: 100 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :spent_on, "Date" %>
+    <%= form.date_field :spent_on, value: @expense.spent_on %>
+  </div>
+
+  <%# Hidden in the app: the native navbar's submit button triggers this. %>
+  <%= form.submit(@expense.new_record? ? "Add expense" : "Save changes",
+        id: "expense-submit", class: "btn btn-primary btn-block native:hidden",
+        data: native_haptic_data(:success)) %>
+<% end %>

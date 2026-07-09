@@ -1,0 +1,13 @@
+<%#
+  Locals: progress (BudgetSummary::CategoryProgress)
+%>
+<%= link_to new_expense_path(category_id: progress.category.id), class: "cat-progress" do %>
+  <div class="cat-progress-head">
+    <span class="cat-emoji" style="--chip-color: <%= progress.color %>"><%= progress.emoji %></span>
+    <span class="cat-name"><%= progress.name %></span>
+    <span class="cat-amount <%= "over" if progress.over? %>">
+      <%= money(progress.spent) %><span class="cat-budget"> / <%= money(progress.budget) %></span>
+    </span>
+  </div>
+  <%= render "shared/bar", percent: progress.percent, color: progress.color %>
+<% end %>

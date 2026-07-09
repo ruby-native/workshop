@@ -1,0 +1,17 @@
+groceries:
+  household: home
+  name: Groceries
+  emoji: "🛒"
+  color: "#16a34a"
+  budget_amount: 200
+  period: weekly
+  position: 0
+
+bills:
+  household: home
+  name: Bills
+  emoji: "💡"
+  color: "#eab308"
+  budget_amount: 300
+  period: monthly
+  position: 1

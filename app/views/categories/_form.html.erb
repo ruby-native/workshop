@@ -1,0 +1,56 @@
+<%= form_with model: @category, class: "form" do |form| %>
+  <% if @category.errors.any? %>
+    <div class="form-errors">
+      <%= @category.errors.full_messages.to_sentence.capitalize %>.
+    </div>
+  <% end %>
+
+  <div class="field-row">
+    <div class="field field-emoji">
+      <%= form.label :emoji, "Icon" %>
+      <%= form.text_field :emoji, maxlength: 4, class: "emoji-input", placeholder: "🛒",
+            autocomplete: "off", aria: { label: "Emoji icon" } %>
+    </div>
+    <div class="field field-grow">
+      <%= form.label :name %>
+      <%= form.text_field :name, placeholder: "Groceries", autofocus: @category.new_record? %>
+    </div>
+  </div>
+
+  <div class="field">
+    <span class="field-label">Color</span>
+    <div class="swatches">
+      <% Category::COLORS.each do |color| %>
+        <label class="swatch" style="--swatch: <%= color %>">
+          <%= form.radio_button :color, color, checked: @category.color == color, class: "swatch-input" %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :budget_amount, "Budget" %>
+    <div class="amount-inline">
+      <span class="amount-currency-sm">$</span>
+      <%= form.number_field :budget_amount, min: 0, step: 1, inputmode: "numeric", placeholder: "0" %>
+    </div>
+    <p class="field-hint">Whole dollars, no cents.</p>
+  </div>
+
+  <fieldset class="picker">
+    <legend>Resets every</legend>
+    <div class="segmented">
+      <label class="seg">
+        <%= form.radio_button :period, "weekly", checked: @category.weekly?, class: "seg-input" %>
+        <span>Week</span>
+      </label>
+      <label class="seg">
+        <%= form.radio_button :period, "monthly", checked: @category.monthly?, class: "seg-input" %>
+        <span>Month</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <%= form.submit(@category.new_record? ? "Add category" : "Save changes",
+        id: "category-submit", class: "btn btn-primary btn-block native:hidden") %>
+<% end %>

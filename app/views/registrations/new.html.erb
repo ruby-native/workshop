@@ -1,0 +1,48 @@
+<% content_for :title, "Create account" %>
+
+<%= native_navbar_tag("Create account") %>
+
+<div class="auth">
+  <div class="auth-brand">
+    <span class="brand-mark brand-mark-lg">¢</span>
+    <h1>Create your account</h1>
+    <p>Start a budget, or join one with an invite code.</p>
+  </div>
+
+  <%= form_with model: @user, url: registration_path, class: "card form" do |form| %>
+    <% if @user.errors.any? %>
+      <div class="form-errors">
+        <%= @user.errors.full_messages.to_sentence.capitalize %>.
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :name, "Name" %>
+      <%= form.text_field :name, autofocus: true, autocomplete: "name", placeholder: "First name" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :email_address, "Email" %>
+      <%= form.email_field :email_address, required: true, autocomplete: "username", placeholder: "you@example.com" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :password, "Password" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password",
+            placeholder: "At least 6 characters", minlength: 6, maxlength: 72 %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :invite_code, "Invite code (optional)" %>
+      <%= text_field_tag :invite_code, @invite_code, placeholder: "Join a shared budget",
+            autocapitalize: "characters", autocomplete: "off", class: "code-input" %>
+      <p class="field-hint">Have one from someone you share a budget with? Enter it to join.</p>
+    </div>
+
+    <%= form.submit "Create account", class: "btn btn-primary btn-block" %>
+  <% end %>
+
+  <p class="auth-switch">
+    Already have an account? <%= link_to "Sign in", new_session_path %>
+  </p>
+</div>

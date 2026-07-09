@@ -1,0 +1,107 @@
+<% content_for :title, "Settings" %>
+
+<%= native_navbar_tag("Settings") %>
+
+<header class="screen-head native:hidden">
+  <h1 class="screen-title">Settings</h1>
+</header>
+
+<section class="block">
+  <div class="block-head">
+    <h2 class="block-title">Budget</h2>
+    <%= link_to "Rename", edit_household_path(@household), class: "block-action" %>
+  </div>
+  <div class="card">
+    <div class="settings-row">
+      <span class="settings-label">Name</span>
+      <span class="settings-value"><%= @household.name %></span>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h2 class="block-title">Share this budget</h2>
+  <div class="card invite-card">
+    <p class="invite-help">Share this code so someone can join and track spending with you.</p>
+    <div class="invite-code"><%= @household.invite_code %></div>
+    <div class="invite-actions">
+      <%= button_to "New code", regenerate_invite_household_path(@household), method: :post,
+            class: "btn btn-ghost",
+            data: { turbo_confirm: "Generate a new code? The old one stops working." } %>
+      <%= link_to "Enter a code", new_join_path, class: "btn btn-ghost" %>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <h2 class="block-title">Members</h2>
+  <div class="card list">
+    <% @members.each do |membership| %>
+      <div class="row member-row">
+        <span class="avatar"><%= membership.user.initials %></span>
+        <span class="row-body">
+          <span class="row-title">
+            <%= membership.user.display_name %><% if membership.user_id == current_user.id %> <span class="tag">you</span><% end %>
+          </span>
+          <span class="row-sub"><%= membership.owner? ? "Owner" : "Member" %> · <%= membership.user.email_address %></span>
+        </span>
+        <% if membership.user_id == current_user.id %>
+          <%= button_to "Leave", membership_path(membership), method: :delete,
+                class: "row-action danger", data: { turbo_confirm: "Leave this budget?" } %>
+        <% elsif @current_membership&.owner? %>
+          <%= button_to "Remove", membership_path(membership), method: :delete,
+                class: "row-action danger", data: { turbo_confirm: "Remove #{membership.user.display_name}?" } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<% if @other_households.any? %>
+  <section class="block">
+    <h2 class="block-title">Switch budget</h2>
+    <div class="card list">
+      <% @other_households.each do |household| %>
+        <%= button_to switch_household_path(household), method: :post, class: "row switch-row" do %>
+          <span class="row-body"><span class="row-title"><%= household.name %></span></span>
+          <span class="row-amount">Switch ›</span>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<section class="block">
+  <div class="block-head">
+    <h2 class="block-title">Categories</h2>
+    <%= link_to "Add", new_category_path, class: "block-action" %>
+  </div>
+  <div class="card list">
+    <% @categories.each do |category| %>
+      <%= link_to edit_category_path(category), class: "row" do %>
+        <span class="row-emoji" style="--chip-color: <%= category.color %>"><%= category.emoji %></span>
+        <span class="row-body">
+          <span class="row-title"><%= category.name %></span>
+          <span class="row-sub"><%= money(category.budget_amount) %> per <%= category.period_label %></span>
+        </span>
+        <span class="row-amount">›</span>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+
+<section class="block">
+  <h2 class="block-title">Account</h2>
+  <div class="card list">
+    <%= link_to edit_profile_path, class: "row" do %>
+      <span class="avatar"><%= current_user.initials %></span>
+      <span class="row-body">
+        <span class="row-title"><%= current_user.display_name %></span>
+        <span class="row-sub"><%= current_user.email_address %></span>
+      </span>
+      <span class="row-amount">›</span>
+    <% end %>
+  </div>
+  <%= button_to "Sign out", session_path, method: :delete,
+        class: "btn btn-ghost btn-block signout", data: { turbo_confirm: "Sign out?" } %>
+</section>

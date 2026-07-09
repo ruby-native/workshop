@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= content_for?(:title) ? "#{content_for(:title)} · Penny Pincher" : "Penny Pincher" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Penny Pincher">
+    <meta name="theme-color" content="#16a34a">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "ruby_native", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <% if authenticated? %>
+      <%= native_tabs_tag %>
+
+      <% unless native_app? %>
+        <header class="topbar">
+          <div class="topbar-inner">
+            <%= link_to root_path, class: "brand", aria: { label: "Penny Pincher" } do %>
+              <span class="brand-mark">¢</span>
+              <span class="brand-name">Penny Pincher</span>
+            <% end %>
+            <nav class="topnav">
+              <%= link_to "Home",     root_path,    class: class_names("topnav-link", active: current_page?(root_path)) %>
+              <%= link_to "History",  summary_path, class: class_names("topnav-link", active: current_page?(summary_path)) %>
+              <%= link_to "Settings", settings_path, class: class_names("topnav-link", active: current_page?(settings_path)) %>
+            </nav>
+          </div>
+        </header>
+      <% end %>
+    <% end %>
+
+    <main class="page native-inset">
+      <%= render "shared/flash" %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

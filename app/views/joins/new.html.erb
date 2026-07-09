@@ -1,0 +1,23 @@
+<% content_for :title, "Join a budget" %>
+
+<%= native_form_tag %>
+<%= native_navbar_tag("Join a budget") do |navbar| %>
+  <% navbar.submit_button title: "Join", click: "#join-submit" %>
+<% end %>
+
+<header class="screen-head with-back native:hidden">
+  <%= link_to settings_path, class: "back-link" do %>‹ Settings<% end %>
+  <h1 class="screen-title">Join a budget</h1>
+</header>
+
+<div class="card">
+  <%= form_with url: join_path, method: :post, class: "form" do |form| %>
+    <p class="field-hint">Enter the invite code from whoever you're sharing a budget with.</p>
+    <div class="field">
+      <%= label_tag :invite_code, "Invite code" %>
+      <%= text_field_tag :invite_code, nil, autofocus: true, autocapitalize: "characters",
+            autocomplete: "off", class: "code-input", placeholder: "ABC123" %>
+    </div>
+    <%= submit_tag "Join budget", id: "join-submit", class: "btn btn-primary btn-block native:hidden" %>
+  <% end %>
+</div>

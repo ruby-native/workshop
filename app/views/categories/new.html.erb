@@ -1,0 +1,15 @@
+<% content_for :title, "Add category" %>
+
+<%= native_form_tag %>
+<%= native_navbar_tag("Add category") do |navbar| %>
+  <% navbar.submit_button title: "Add", click: "#category-submit" %>
+<% end %>
+
+<header class="screen-head with-back native:hidden">
+  <%= link_to settings_path, class: "back-link" do %>‹ Settings<% end %>
+  <h1 class="screen-title">Add category</h1>
+</header>
+
+<div class="card">
+  <%= render "form" %>
+</div>

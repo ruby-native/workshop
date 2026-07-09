@@ -1,0 +1,23 @@
+<% content_for :title, "Categories" %>
+
+<%= native_navbar_tag("Categories") %>
+
+<header class="screen-head with-back native:hidden">
+  <%= link_to settings_path, class: "back-link" do %>‹ Settings<% end %>
+  <h1 class="screen-title">Categories</h1>
+</header>
+
+<div class="card list">
+  <% @categories.each do |category| %>
+    <%= link_to edit_category_path(category), class: "row" do %>
+      <span class="row-emoji" style="--chip-color: <%= category.color %>"><%= category.emoji %></span>
+      <span class="row-body">
+        <span class="row-title"><%= category.name %></span>
+        <span class="row-sub"><%= money(category.budget_amount) %> per <%= category.period_label %></span>
+      </span>
+      <span class="row-amount">›</span>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "Add category", new_category_path, class: "btn btn-primary btn-block" %>

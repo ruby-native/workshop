@@ -1,0 +1,17 @@
+<div class="period-row <%= "is-current" if period.current? %>">
+  <div class="period-head">
+    <div class="period-labels">
+      <span class="period-label"><%= period.label %></span>
+      <% if period.sub_label.present? %><span class="period-sub"><%= period.sub_label %></span><% end %>
+    </div>
+    <% if period.budget.zero? %>
+      <span class="period-chip neutral"><%= money(period.spent) %></span>
+    <% elsif period.over? %>
+      <span class="period-chip over"><%= money(period.remaining.abs) %> over</span>
+    <% else %>
+      <span class="period-chip under"><%= money(period.remaining) %> left</span>
+    <% end %>
+  </div>
+  <%= render "shared/bar", percent: period.percent %>
+  <div class="period-foot"><%= money(period.spent) %> of <%= money(period.budget) %></div>
+</div>

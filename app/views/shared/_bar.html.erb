@@ -1,0 +1,8 @@
+<%#
+  Renders a budget progress bar.
+  Locals: percent (Integer), color (optional hex for the fill).
+%>
+<div class="bar" role="progressbar" aria-valuenow="<%= bar_width(percent) %>" aria-valuemin="0" aria-valuemax="100">
+  <div class="bar-fill <%= bar_state(percent) %>"
+       style="width: <%= bar_width(percent) %>%;<%= " --bar-color: #{color};" if local_assigns[:color].present? %>"></div>
+</div>

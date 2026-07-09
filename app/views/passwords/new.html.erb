@@ -1,0 +1,24 @@
+<% content_for :title, "Reset password" %>
+
+<%= native_navbar_tag("Reset password") %>
+
+<div class="auth">
+  <div class="auth-brand">
+    <span class="brand-mark brand-mark-lg">¢</span>
+    <h1>Forgot your password?</h1>
+    <p>We'll email you a reset link.</p>
+  </div>
+
+  <%= form_with url: passwords_path, class: "card form" do |form| %>
+    <div class="field">
+      <%= form.label :email_address, "Email" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username",
+            placeholder: "you@example.com", value: params[:email_address] %>
+    </div>
+    <%= form.submit "Email reset instructions", class: "btn btn-primary btn-block" %>
+  <% end %>
+
+  <p class="auth-switch">
+    <%= link_to "Back to sign in", new_session_path %>
+  </p>
+</div>

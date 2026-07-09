@@ -1,0 +1,48 @@
+# Ruby Native reads this file on launch to configure the native app.
+# Edit and relaunch the native app to see changes.
+
+app:
+  name: Penny Pincher
+  # Advanced Mode: Hotwire Native navigator with native push/pop and modal
+  # transitions. URLs ending in /new or /edit present modally.
+  mode: advanced
+  # First screen on launch: the budget overview.
+  entry_path: /
+
+appearance:
+  # Penny Pincher green for tab selection, links, and buttons.
+  tint_color: "#16a34a"
+  # Launch + safe-area fill. Matches the app background in light and dark.
+  background_color:
+    light: "#f5f7f4"
+    dark: "#0c0f0d"
+  theme: auto
+
+# Bottom tab bar. Icons are SF Symbols on iOS and Material Icons on Android.
+tabs:
+  - title: Home
+    path: /
+    icon: house.fill
+    icons:
+      android: home
+    eager: true
+    # Adding an expense still belongs to the Home tab.
+    auto_route: [ /expenses ]
+  - title: History
+    path: /summary
+    icon: calendar
+    icons:
+      android: calendar_month
+  - title: Settings
+    path: /settings
+    icon: gearshape.fill
+    icons:
+      android: settings
+    # Everything reachable from Settings stays on the Settings tab.
+    auto_route: [ /categories, /households, /join, /profile ]
+
+# Linked domains (optional). Fill in once you have a domain + Apple Team ID so
+# links to your site open in the app and passwords autofill.
+# ios:
+#   bundle_id: com.masilotti.pennypincher
+#   team_id: ABCD123456

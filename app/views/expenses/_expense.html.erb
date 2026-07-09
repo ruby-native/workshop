@@ -1,0 +1,10 @@
+<%= link_to edit_expense_path(expense), class: "row expense-row" do %>
+  <span class="row-emoji" style="--chip-color: <%= expense.category.color %>"><%= expense.category.emoji %></span>
+  <span class="row-body">
+    <span class="row-title">
+      <%= expense.category.name %><% if expense.note.present? %> · <span class="row-note"><%= expense.note %></span><% end %>
+    </span>
+    <span class="row-sub"><%= expense.user.display_name %> · <%= expense.spent_on.strftime("%b %-d") %></span>
+  </span>
+  <span class="row-amount"><%= money(expense.amount) %></span>
+<% end %>

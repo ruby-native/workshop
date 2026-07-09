@@ -1,0 +1,75 @@
+<% content_for :title, "Home" %>
+
+<%# Native navigation bar title (Advanced Mode). %>
+<%= native_navbar_tag(current_household.name) %>
+
+<%# Ask for push permission once the user is in. %>
+<%= native_push_tag %>
+
+<%# Native floating add button (and a web one below). %>
+<%= native_fab_tag(icon: "plus", icons: { ios: "plus", android: "add" }, href: new_expense_path) %>
+
+<header class="screen-head native:hidden">
+  <div>
+    <p class="eyebrow"><%= current_household.name %></p>
+    <h1 class="screen-title">Where you stand</h1>
+  </div>
+</header>
+
+<% unless native_app? %>
+  <%= link_to new_expense_path, class: "fab fab-web" do %>
+    <span class="fab-plus">+</span> Add expense
+  <% end %>
+<% end %>
+
+<% if @summary.any_categories? %>
+  <section class="summary">
+    <%= render "summary_card", title: "#{@summary.month_label} snapshot",
+          spent: @summary.snapshot_spent, budget: @summary.snapshot_budget,
+          remaining: @summary.snapshot_remaining, percent: @summary.snapshot_percent %>
+  </section>
+
+  <% if @summary.weekly.any? %>
+    <section class="block">
+      <h2 class="block-title">Weekly budgets</h2>
+      <div class="card cat-list">
+        <%= render partial: "category_progress", collection: @summary.weekly, as: :progress %>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @summary.monthly.any? %>
+    <section class="block">
+      <h2 class="block-title">Monthly budgets</h2>
+      <div class="card cat-list">
+        <%= render partial: "category_progress", collection: @summary.monthly, as: :progress %>
+      </div>
+    </section>
+  <% end %>
+<% else %>
+  <section class="empty card">
+    <p class="empty-title">No categories yet</p>
+    <p class="empty-sub">Add a category with a weekly or monthly budget to start tracking.</p>
+    <%= link_to "Add a category", new_category_path, class: "btn btn-primary" %>
+  </section>
+<% end %>
+
+<section class="block">
+  <div class="block-head">
+    <h2 class="block-title">Recent</h2>
+    <% unless @logged_today %>
+      <span class="nudge">Nothing logged today</span>
+    <% end %>
+  </div>
+
+  <% if @recent_expenses.any? %>
+    <div class="card list">
+      <%= render @recent_expenses %>
+    </div>
+  <% else %>
+    <div class="card empty">
+      <p class="empty-title">No expenses yet</p>
+      <p class="empty-sub">Tap the + button to log your first one.</p>
+    </div>
+  <% end %>
+</section>

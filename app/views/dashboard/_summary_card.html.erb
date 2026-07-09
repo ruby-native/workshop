@@ -1,0 +1,22 @@
+<%#
+  Locals: title, spent, budget, remaining, percent
+%>
+<div class="summary-card">
+  <div class="summary-card-head">
+    <span class="summary-card-title"><%= title %></span>
+    <span class="summary-card-pct <%= bar_state(percent) %>"><%= percent %>%</span>
+  </div>
+
+  <div class="summary-card-amount"><%= money(spent) %></div>
+  <div class="summary-card-sub">of <%= money(budget) %></div>
+
+  <%= render "shared/bar", percent: percent %>
+
+  <div class="summary-card-foot <%= "over" if remaining.negative? %>">
+    <% if remaining.negative? %>
+      <%= money(remaining.abs) %> over budget
+    <% else %>
+      <%= money(remaining) %> left
+    <% end %>
+  </div>
+</div>
