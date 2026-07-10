@@ -2,6 +2,8 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   config.hosts << ".trycloudflare.com"
+  # Allow access from GitHub Codespaces.
+  config.hosts << ".app.github.dev"
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
