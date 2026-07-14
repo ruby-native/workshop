@@ -4,6 +4,10 @@ Rails.application.configure do
   config.hosts << ".trycloudflare.com"
   # Allow access from GitHub Codespaces.
   config.hosts << ".app.github.dev"
+  # Codespaces port forwarding makes the browser Origin (localhost:3000) differ
+  # from request.base_url (the github.dev URL), which trips the CSRF origin check.
+  # Skip that comparison in development; CSRF token protection still runs.
+  config.action_controller.forgery_protection_origin_check = false
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
